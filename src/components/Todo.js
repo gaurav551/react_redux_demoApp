@@ -47,7 +47,7 @@ const mapDispatchToProps = dispatch => {
 		},
         deleteTodoItem: ()=>{
            
-            dispatch(todoRedux.deleteTodo());
+            dispatch(todoRedux.deleteTodo(12));
         }
 	};
 };

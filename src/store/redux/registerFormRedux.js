@@ -1,35 +1,32 @@
 import { createActions } from 'reduxsauce';
 import { createReducer } from 'reduxsauce';
-import { todoService } from '../../services/todoService';
+import { registerFormService } from '../../services/registerFormService';
 
-const INITIAL_STATE = { todoData: null, isLoading: true, error: null };
+const INITIAL_STATE = { apiResponse: null, isLoading: true, error: null };
 
 export const { Types, Creators } = createActions(
     {
         isLoading: null,
-        success: ['todoData'],
+        success: ['apiResponse'],
         failure: ['error'],
-        load: () => {
+        registerData: (data) => {
+            
             return (dispatch, getState) => {
-                load(dispatch, {});
+                registerData(dispatch, {data});
             };
         },
-        deleteTodo : (id)=> {
-            return (dispatch, getState) => {
-                deleteTodo(dispatch, {});
-            };
-        }
+       
     },
-    { prefix: 'TodoData_' }
+    { prefix: 'apiResponse_' }
 );
 
-export const load = (dispatch, action) => {
+export const registerData = (dispatch, action) => {
     
     dispatch(Creators.isLoading());
-    let service = new todoService();
-    service.getTodo()
+    let service = new registerFormService();
+    service.registerData(action.data)
         .then(response => {
-          
+           
             dispatch(Creators.success(response.data));
         })
         .catch(error => {
@@ -37,17 +34,12 @@ export const load = (dispatch, action) => {
         });
 };
 
-export const deleteTodo = (dispatch, action) => {
-    
-    dispatch(Creators.success(INITIAL_STATE.todoData.filter(x=>x.id!==3)));
-   
-   // console.log("delete todo"+ action.id);
-};
+
 
 export const success = (state = INITIAL_STATE, action) => {
     return {
         ...state,
-        todoData: action.todoData,
+        apiResponse: action.apiResponse,
         error: null,
         isLoading: false
     };
@@ -56,7 +48,7 @@ export const success = (state = INITIAL_STATE, action) => {
 export const failure = (state = INITIAL_STATE, action) => {
     return {
         ...state,
-        todoData: null,
+        apiResponse: null,
         error: action.error,
         isLoading: false
     };
