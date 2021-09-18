@@ -2,7 +2,7 @@ import { createActions } from 'reduxsauce';
 import { createReducer } from 'reduxsauce';
 import { registerFormService } from '../../services/registerFormService';
 
-const INITIAL_STATE = { apiResponse: null, isLoading: true, error: null };
+const INITIAL_STATE = { apiResponse: null, isLoading: false, error: null };
 
 export const { Types, Creators } = createActions(
     {
@@ -46,6 +46,7 @@ export const success = (state = INITIAL_STATE, action) => {
 };
 
 export const failure = (state = INITIAL_STATE, action) => {
+    alert(action.error)
     return {
         ...state,
         apiResponse: null,

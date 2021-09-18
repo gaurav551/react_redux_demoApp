@@ -34,9 +34,10 @@ class RegisterForm extends Component {
             <div>
                
                 <input type='text' placeholder='input text' onChange={this.handleChange} value={this.state.name}/>
-                <button onClick={this.submit} >SUbmit</button>
+                <button onClick={this.submit} >Get Todo by Id</button>
                  <h4>Response from registerFormService</h4>
-                 {this.apiResponseContent()}
+                 {this.props.isLoading?  <p>Loading data</p> :this.apiResponseContent()}
+                 {this.props.error}
             </div>
         )
     }
@@ -54,7 +55,8 @@ const mapDispatchToProps = dispatch => {
 const mapStatesToProps = state => {
 	return {
 		apiResponse: state.registerFormData.apiResponse,
-        isLoading : state.registerFormData.isLoading
+        isLoading : state.registerFormData.isLoading,
+        error :state.registerFormData.error
 	};
 };
 
